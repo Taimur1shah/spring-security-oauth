@@ -1,6 +1,7 @@
 package com.baeldung.resource.web.controller;
 
 import java.util.Collections;
+import java.util.Hashtable;
 import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +14,10 @@ public class UserInfoController {
 
     @GetMapping("/user/info")
     public Map<String, Object> getUserInfo(@AuthenticationPrincipal Jwt principal) {
-        return Collections.singletonMap("user_name", principal.getClaimAsString("preferred_username"));
+
+        Map<String, String> map = new Hashtable<String, String>();
+        map.put("user_name", principal.getClaimAsString("preferred_username"));
+
+        return Collections.unmodifiableMap(map);
     }
 }
